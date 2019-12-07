@@ -21,21 +21,27 @@
         <div class="container">
             <div class="card p-4 m-4 bg-light">
                 <div class="card-body text-center">
+                    <h2 class="text-left">Reportes</h2>
+                    <hr>
                     <div class="row">
                         <div class="col-4">
-                            <h2 class="text-left">Reportes</h2>
                             <img src="images/dataAnalysis.png" alt="analisis" width="270px" height="170px">
                         </div>
                         <div class="col-4">
                             <form method='POST' action='ReporteMenus'>
                                 <p class="m-4 text-left" href="ReporteMenus">Seleccionar fecha:</p>
                                 <input id="btnReporte" class="" type="date" name="fechaReporteMenu">
+                                <c:if test="${msgError != null}">
+                                    <p style="color: red;">${msgError}</p>
+                                </c:if>
                                 <button id="btnReporte" class="btn btn-info">Consultar Menus</button>
                             </form>
-                            
+
                             <a id="btnReporte" class="btn btn-info m-4" href="ReportePedidos">Consultar Pedidos</a>
                             <br/>
                             <button id="btnReporte" class="btn btn-info">Consultar Finanzas</button>
+                            <br/>
+                            <a id="btnReporte" class="btn btn-info m-4" href="ReporteGarzon">Rendimiento garzones 2019</a>
                             <br/><br/>
 
                         </div>
@@ -62,6 +68,5 @@
             }
 
         </style>
-
     </body>
 </html>

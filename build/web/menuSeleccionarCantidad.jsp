@@ -51,8 +51,9 @@
                                         <a href="#" class="img" style="background-image: url('images/${menu.nombre}.jpg');"></a>
                                         <div class="text p-4">
                                             <h3>${menu.nombre}</h3>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                            <p class="price" style="font-size: 2rem;"><span>$ ${menu.precio}</span> <a href="#" class="ml-2 btn btn-white btn-outline-white">AGREGAR</a></p>
+                                            <p>Tenemos como misión satisfacer las necesidades gastronómicas de nuestros clientes, ofreciendo alimentos y servicios con la más alta calidad, donde se sobrepasen las expectativas de nuestros consumidores. </p>
+                                            <p class="" style="font-size: 2rem;"><span class="precioMenu">$ ${menu.precio}</span> 
+<!--                                            <a href="#" class="ml-2 btn btn-white btn-outline-white">AGREGAR</a></p>-->
                                         </div>
                                     </div>
                                 </div>
@@ -82,6 +83,13 @@
             </div>
         </div>
     </section>
+                                            
+                                            <style>
+                                                .precioMenu{
+                                                    font-size: 2rem;
+                                                    color: #004d40;
+                                                }
+                                            </style>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>

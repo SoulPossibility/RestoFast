@@ -6,10 +6,12 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import modelo.Conexion;
 import modelo.Menu;
@@ -53,6 +55,51 @@ public class OrdenDAO {
         }
     }
     
+    public int actualizar(Orden orden){
+        int r = 0;
+        PreparedStatement ps = null;
+        Connection con = new Conexion().conectar();
+        String sql = "UPDATE orden set estado=? where id = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, orden.getEstado());
+            ps.setInt(2, orden.getId());
+            r = ps.executeUpdate();
+            if (r == 1) {
+                r = 1;
+            }else{
+                r = 0;
+            }
+            System.out.println("iafjasñkfjasñkdlfjsalkñd: " + r);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return r;
+    }
+    
+    public Orden buscar(int id) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection con = new Conexion().conectar();
+        String sql = "SELECT * FROM orden WHERE id=?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Orden orden = new Orden(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getInt(5), rs.getInt(6));
+                con.close();
+                return orden;
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        System.out.println("No se pudo encontrar el proveedor");
+        return null;
+    }
+
     public ArrayList<Orden> listar() {
         ArrayList<Orden> lista = new ArrayList<>();
         Statement st;
@@ -69,8 +116,16 @@ public class OrdenDAO {
                 //int id, String estado, Date fecha, Menu menu, SesionAtencion sesionAtencion
                 SesionAtencion sesion = sesionDAO.buscar(rs.getInt(5));
                 Menu menu = menuDAO.buscar(rs.getString(4));
+
+                Date date;
+                Timestamp timestamp = rs.getTimestamp(3);
+                if (timestamp != null) {
+                    date = new Date(timestamp.getTime());
+                }else{
+                    date = null;
+                }
                 
-                Orden orden = new Orden(rs.getInt(1), rs.getString(2), rs.getDate(3), menu, sesion, rs.getInt(6));
+                Orden orden = new Orden(rs.getInt(1), rs.getString(2), date, menu, sesion, rs.getInt(6));
                 lista.add(orden);
             }
             con.close();
@@ -80,7 +135,7 @@ public class OrdenDAO {
             return lista;
         }
     }
-    
+
     public ArrayList<Orden> listarSinObjetos() {
         ArrayList<Orden> lista = new ArrayList<>();
         Statement st;
@@ -102,7 +157,7 @@ public class OrdenDAO {
             return lista;
         }
     }
-    
+
     public ArrayList<Orden> listarPendientesSinObjetos() {
         ArrayList<Orden> lista = new ArrayList<>();
         Statement st;
@@ -124,7 +179,7 @@ public class OrdenDAO {
             return lista;
         }
     }
-    
+
     public ArrayList<Orden> listarPendientes() {
         ArrayList<Orden> lista = new ArrayList<>();
         Statement st;
@@ -141,7 +196,7 @@ public class OrdenDAO {
                 //int id, String estado, Date fecha, Menu menu, SesionAtencion sesionAtencion
                 SesionAtencion sesion = sesionDAO.buscar(rs.getInt(5));
                 Menu menu = menuDAO.buscar(rs.getString(4));
-                
+
                 Orden orden = new Orden(rs.getInt(1), rs.getString(2), rs.getDate(3), menu, sesion, rs.getInt(6));
                 lista.add(orden);
             }

@@ -73,7 +73,7 @@ public class RegistrarFuncionario extends HttpServlet {
         }
 
         //Redirecciono hacia otra página
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("adminMenu.jsp").forward(request, response);
 
     }
 

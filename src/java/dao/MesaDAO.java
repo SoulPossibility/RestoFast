@@ -89,7 +89,7 @@ public class MesaDAO {
         Statement st;
         ResultSet rs;
         Connection con = new Conexion().conectar();
-        String sql = "SELECT * FROM mesa";
+        String sql = "SELECT * FROM mesa ORDER BY numero ASC";
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql);

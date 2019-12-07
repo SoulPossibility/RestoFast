@@ -41,7 +41,7 @@ public class RegistrarPedido extends HttpServlet {
         String fecha_solicitud = request.getParameter("fecha_solicitud");
 
         try {
-            SimpleDateFormat simpleDate = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date fechaAux = simpleDate.parse(fecha_solicitud);
             java.sql.Date fecha = new java.sql.Date(fechaAux.getTime());
 

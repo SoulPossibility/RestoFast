@@ -9,42 +9,45 @@ import java.sql.Date;
 
 /**
  *
- * @author BlueOcean
+ * @author femxn
  */
 public class Producto {
+
     private int id;
     private String nombre;
     private String tipo;
-    private Date fechaElaboracion;
-    private Date fechaVencimiento;
+    private Date fecha_elaboracion;
+    private Date fecha_vencimiento;
     private int precio;
     private int stock;
-    private int IdProveedor;
+    private int proveedor_id;
     private Proveedor proveedor;
 
-    public Producto(int id, String nombre, String tipo, Date fechaElaboracion, Date fechaVencimiento, int precio, int stock, Proveedor proveedor) {
-        this.id = id;
-        this.nombre = nombre;
-        this.tipo = tipo;
-        this.fechaElaboracion = fechaElaboracion;
-        this.fechaVencimiento = fechaVencimiento;
-        this.precio = precio;
-        this.stock = stock;
-        this.proveedor = proveedor;
+    public Producto() {
     }
 
-    public Producto(int id, String nombre, String tipo, Date fechaElaboracion, Date fechaVencimiento, int precio, int stock, int IdProveedor) {
+    public Producto(int id, String nombre, String tipo, Date fecha_elaboracion, Date fecha_vencimiento, int precio, int stock, int proveedor_id) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
-        this.fechaElaboracion = fechaElaboracion;
-        this.fechaVencimiento = fechaVencimiento;
+        this.fecha_elaboracion = fecha_elaboracion;
+        this.fecha_vencimiento = fecha_vencimiento;
         this.precio = precio;
         this.stock = stock;
-        this.IdProveedor = IdProveedor;
+        this.proveedor_id = proveedor_id;
     }
-    
-    
+
+    public Producto(int id, String nombre, String tipo, Date fecha_elaboracion, Date fecha_vencimiento, int precio, int stock, int proveedor_id, Proveedor proveedor) {
+        this.id = id;
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.fecha_elaboracion = fecha_elaboracion;
+        this.fecha_vencimiento = fecha_vencimiento;
+        this.precio = precio;
+        this.stock = stock;
+        this.proveedor_id = proveedor_id;
+        this.proveedor = proveedor;
+    }
 
     public int getId() {
         return id;
@@ -70,20 +73,20 @@ public class Producto {
         this.tipo = tipo;
     }
 
-    public Date getFechaElaboracion() {
-        return fechaElaboracion;
+    public Date getFecha_elaboracion() {
+        return fecha_elaboracion;
     }
 
-    public void setFechaElaboracion(Date fechaElaboracion) {
-        this.fechaElaboracion = fechaElaboracion;
+    public void setFecha_elaboracion(Date fecha_elaboracion) {
+        this.fecha_elaboracion = fecha_elaboracion;
     }
 
-    public Date getFechaVencimiento() {
-        return fechaVencimiento;
+    public Date getFecha_vencimiento() {
+        return fecha_vencimiento;
     }
 
-    public void setFechaVencimiento(Date fechaVencimiento) {
-        this.fechaVencimiento = fechaVencimiento;
+    public void setFecha_vencimiento(Date fecha_vencimiento) {
+        this.fecha_vencimiento = fecha_vencimiento;
     }
 
     public int getPrecio() {
@@ -102,6 +105,14 @@ public class Producto {
         this.stock = stock;
     }
 
+    public int getProveedor_id() {
+        return proveedor_id;
+    }
+
+    public void setProveedor_id(int proveedor_id) {
+        this.proveedor_id = proveedor_id;
+    }
+
     public Proveedor getProveedor() {
         return proveedor;
     }
@@ -110,14 +121,4 @@ public class Producto {
         this.proveedor = proveedor;
     }
 
-    public int getIdProveedor() {
-        return IdProveedor;
-    }
-
-    public void setIdProveedor(int IdProveedor) {
-        this.IdProveedor = IdProveedor;
-    }
-    
-    
-    
 }

@@ -43,13 +43,30 @@ public class DetallePedidoDAO {
         }
     }
 
-    public boolean eliminar(int pedido_id) {
+    public boolean eliminar2(int pedido_id) {
         PreparedStatement ps = null;
         Connection con = new Conexion().conectar();
         String sql = "DELETE FROM detalle_pedido WHERE pedido_id=?";
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, pedido_id);
+            ps.execute();
+            con.close();
+            return true;
+        } catch (Exception e) {
+            System.err.println(e);
+            return false;
+        }
+    }
+    
+    public boolean eliminar(int pedido_id, int producto_id) {
+        PreparedStatement ps = null;
+        Connection con = new Conexion().conectar();
+        String sql = "DELETE FROM detalle_pedido WHERE pedido_id=? and producto_id=?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, pedido_id);
+            ps.setInt(2, producto_id);
             ps.execute();
             con.close();
             return true;
@@ -80,6 +97,52 @@ public class DetallePedidoDAO {
         System.out.println("No se pudo encontrar el pedido");
         return null;
     }
+    
+    public DetallePedido buscar(int pedido_id, int producto_id) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection con = new Conexion().conectar();
+        String sql = "SELECT * FROM detalle_pedido WHERE pedido_id=? and producto_id=?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, pedido_id);
+            ps.setInt(2, producto_id);
+            ps.execute();
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                DetallePedido detPedi = new DetallePedido(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getString(5));
+                con.close();
+                return detPedi;
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        System.out.println("No se pudo encontrar el pedido");
+        return null;
+    }
+    
+    public boolean update(DetallePedido detPedi) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection con = new Conexion().conectar();
+        String sql = "UPDATE detalle_pedido SET cantidad = ?, valor= ?, descripcion=? WHERE pedido_id=? and producto_id=?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, detPedi.getCantidad());
+            ps.setInt(2, detPedi.getValor());
+            ps.setString(3, detPedi.getDescripcion()); 
+            ps.setInt(4, detPedi.getPedido_id());
+            ps.setInt(5, detPedi.getProducto_id());
+
+            ps.execute();
+            con.close();
+            return true;
+        } catch (SQLException e) {
+            System.err.println(e);
+            e.printStackTrace();
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
 
     public ArrayList<DetallePedido> listar() {
         ArrayList<DetallePedido> lista = new ArrayList<>();
@@ -102,4 +165,26 @@ public class DetallePedidoDAO {
         }
     }
     
+    public ArrayList<DetallePedido> listarDelPedi(int pedido_id) {
+        ArrayList<DetallePedido> lista = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs;
+        Connection con = new Conexion().conectar();
+        String sql = "SELECT * FROM detalle_pedido WHERE pedido_id=?";
+        try {            
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, pedido_id);
+            ps.execute();
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                DetallePedido detallePedido = new DetallePedido(rs.getInt("pedido_id"), rs.getInt("producto_id"), rs.getInt("cantidad"), rs.getInt("valor"), rs.getString("descripcion"));
+                lista.add(detallePedido);
+            }
+            con.close();
+            return lista;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return lista;
+        }
+    }
 }

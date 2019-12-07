@@ -37,9 +37,9 @@ public class EliminarDetallePedido extends HttpServlet {
         
         DetallePedidoDAO detallePedidoDAO = new DetallePedidoDAO();
         
-        detallePedidoDAO.eliminar(pedido_id);
+        detallePedidoDAO.eliminar(pedido_id, producto_id);
         
-        request.getRequestDispatcher("ListarDetallePedido").forward(request, response);
+        request.getRequestDispatcher("ListarPedido").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

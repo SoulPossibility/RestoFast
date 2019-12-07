@@ -28,17 +28,19 @@
                 </div>
                 <div class="card-body p-4">
                     <div class="offset-md-3 col-md-6 text-center">
-                        <div class="list-group">
+                        <div class="list-group shadow">
                             <a id="linkHeader" href="#" class="list-group-item bg-dark">Seleccione una mesa</a>
                             <c:forEach items="${mesas}" var="mesa">
                                 <a href="ClienteConfigurarMesa?EstablecerMesa=${mesa.numero}" class="list-group-item">Mesa ${mesa.numero}</a>
                             </c:forEach>
                         </div>
+                        <br/>
+                        <a href="adminMenu.jsp" class="btn btn-block btn-info" style="font-size: 1.8rem;">Volver</a>
                     </div>
                 </div>
                 <div class="card-footer">
                     <ul>
-                        <li>Se crearà un archivo en un directorio del equipo que contiene el nùmero seleccionado en la ruta "home.user/NombreDeUsuario/numeroMesaRestoFast.txt"</li>
+                        <li>Se crearà una cookie en el navegador del equipo que contiene el nùmero seleccionado de la mesa seleccionada"</li>
                         <li>Realizado el paso anterior se podrà acceder a la interfaz de selección de menús para los clientes.</li>
                     </ul>
 

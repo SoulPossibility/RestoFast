@@ -21,20 +21,18 @@
         <title>Login</title>   
 
     </head>
-    <body>
+    <body style=" background-image: url('images/bg_3.jpg'); background-size: cover;">
         <br>
         <br>
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    </br>
-                    </br>
-                    </br>
-                    </br>
-                    </br>
-                    <div class="card text-center p-4">
-                        <h4>INICIAR SESION</h4>
+                <div class="col-8 offset-2">
+                    <br/><br/><br/><br/>
+                    <div class="card shadow-lg text-center p-4">
                         <br/>
+                        <img class="img-fluid p-1" style="width: 10rem; display: block; margin: 0 auto;" src="images/logo_restofast.jpg" alt="logo">
+                        <h4 class="tituloResto">RESTAURANTE RESTOFAST</h4>
+                         <br/> <br/>
                         <form action="Controller">
                             <div class="form-group">
                                 <div class="input-group flex-nowrap">
@@ -49,10 +47,9 @@
                                     </div>
                                     <input id="txtPass" class="form-control" type="password" name="txtPass" placeholder="Ingrese Contraseña">
                                 </div>
-                                </br>
-                                </br>
-                                <button id="btnAceptar" class="btn btn-info" name="bt" value="iniciar" type="submit">
-                                    Aceptar
+                                <br/><br/>
+                                <button id="btnAceptar" class="btn btn-info btn-block col-8 offset-2" name="bt" value="iniciar" type="submit">
+                                    Ingresar
                                 </button>
                             </div>
                         </form>
@@ -60,6 +57,12 @@
                         <c:if test="${msg != null}">
                             <p id="msgError" class="alert-warning">${msg}</p>
                         </c:if>
+
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-center">
+                                <a href="#">¿Olvidaste tú Contraseña ?</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -70,14 +73,7 @@
             </br>
             </br>
 
-            <div class="card-footer">
-                <div class="d-flex justify-content-center links">
-                    ¿No Tienes Una Cuenta?<a href="#">Sign Up</a>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <a href="#">¿Olvidaste tú Contraseña ?</a>
-                </div>
-            </div>
+
         </div>
 
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
@@ -89,6 +85,11 @@
             #msgError{
                 font-size: 1.7rem;
                 height: 30px;
+            }
+            
+            .tituloResto{
+                color: #138496;
+                font-size: 2rem;
             }
         </style>
     </body>

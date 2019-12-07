@@ -13,9 +13,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.Mesa;
 
 /**
@@ -79,18 +81,26 @@ public class ClienteConfigurarMesa extends HttpServlet {
             listaMesas = mesaDAO.listar();
             
             int numero = Integer.parseInt(numeroMesa);
-            String directory = System.getProperty("user.home");
-            String fileName = "numeroMesaRestoFast.txt";
-            String absolutePath = directory + File.separator + fileName;
-
-            // ESCRIBE CONTENIDO EN UN ARCHIVO EN EL DIRECTORIO USER -> USUARIOACTUAL DE WINDOWS
-            // EL NUMERO DE LA MESA DE ESTE DISPOSITIVO SE LEERA DESDE EL ARCHIVO CREADO Y SE REEMPLAZARA ANTE CAMBIOS
-            try (FileWriter fileWriter = new FileWriter(absolutePath)) {
-                String fileContent = "" + numero;
-                fileWriter.write(fileContent);
-            } catch (IOException e) {
-                // exception handling
-            }
+//            String directory = System.getProperty("user.home");
+//            String fileName = "numeroMesaRestoFast.txt";
+//            String absolutePath = directory + File.separator + fileName;
+//
+//            // ESCRIBE CONTENIDO EN UN ARCHIVO EN EL DIRECTORIO USER -> USUARIOACTUAL DE WINDOWS
+//            // EL NUMERO DE LA MESA DE ESTE DISPOSITIVO SE LEERA DESDE EL ARCHIVO CREADO Y SE REEMPLAZARA ANTE CAMBIOS
+//            try (FileWriter fileWriter = new FileWriter(absolutePath)) {
+//                String fileContent = "" + numero;
+//                fileWriter.write(fileContent);
+//            } catch (IOException e) {
+//                // exception handling
+//            }
+            
+            HttpSession sesionMesa = request.getSession();
+            sesionMesa.setAttribute("configuracionMesa", numero);
+            
+            Cookie mesaCookie = new Cookie("numeroMesa.numero", ""+numero);
+            mesaCookie.setMaxAge(60*60*24);
+            response.addCookie(mesaCookie);
+            
             request.setAttribute("mesas", listaMesas);
             request.setAttribute("msgInfo", "Se ha establecido el dispositivo a la mesa " + numero);
             request.getRequestDispatcher("clienteConfigurarMesa.jsp").forward(request, response);

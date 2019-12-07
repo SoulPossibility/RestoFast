@@ -26,33 +26,22 @@ import modelo.Usuario;
 public class SesionAtencionDAO {
 
     public boolean registrar(SesionAtencion sesionAtencion) {
-        System.out.println("intenta");
         int id = 1;
-        PreparedStatement ps = null;
+        CallableStatement csStmnt = null;
         ResultSet rs = null;
         Connection con = new Conexion().conectar();
-        String sql = "INSERT INTO sesion_atencion (id, fecha_inicio, fecha_termino, cantidad_comensales, cliente_id, mesa_numero, usuario_nombre_usuario) VALUES (?,?,?,?,?,?,?)";
+        //String sql = "INSERT INTO sesion_atencion (id, fecha_inicio, fecha_termino, cantidad_comensales, cliente_id, mesa_numero, usuario_nombre_usuario) VALUES (?,?,?,?,?,?,?)";
         try {
-            ps = con.prepareStatement("SELECT MAX(id) FROM sesion_atencion");
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                id = rs.getInt(1) + 1;
-            }
-            ps = con.prepareStatement(sql);
-            System.out.println("EL MAXIMO OBTENIDO ES : " + id);
-            ps.setInt(1, id);
-            //ps.setString(id, sql);
+            csStmnt = con.prepareCall("{call REGISTRASESIONATENCION(?,?,?,?,?,?,?)}");
+            csStmnt.setInt(1, sesionAtencion.getId());
+            csStmnt.setDate(2, sesionAtencion.getFecha_inicio());
+            csStmnt.setDate(3, sesionAtencion.getFecha_termino());
+            csStmnt.setInt(4, sesionAtencion.getCantidad_comensales());
+            csStmnt.setInt(5, sesionAtencion.getCliente());
+            csStmnt.setInt(6, sesionAtencion.getMesa());
+            csStmnt.setString(7, sesionAtencion.getUsuario());
 
-            //ps.setDate(2, date);
-            //ps.setDate(3, date);
-            ps.setDate(2, sesionAtencion.getFecha_inicio());
-            ps.setDate(3, sesionAtencion.getFecha_termino());
-            ps.setInt(4, sesionAtencion.getCantidad_comensales());
-            ps.setInt(5, sesionAtencion.getCliente());
-            ps.setInt(6, sesionAtencion.getMesa());
-            ps.setString(7, sesionAtencion.getUsuario());
-            System.out.println("ejecuta");
-            ps.execute();
+            csStmnt.execute();
             con.close();
             return true;
         } catch (SQLException e) {
@@ -61,6 +50,41 @@ public class SesionAtencionDAO {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
+    
+//    public boolean registrar(SesionAtencion sesionAtencion) {
+//        int id = 1;
+//        PreparedStatement ps = null;
+//        ResultSet rs = null;
+//        Connection con = new Conexion().conectar();
+//        String sql = "INSERT INTO sesion_atencion (id, fecha_inicio, fecha_termino, cantidad_comensales, cliente_id, mesa_numero, usuario_nombre_usuario) VALUES (?,?,?,?,?,?,?)";
+//        try {
+//            ps = con.prepareStatement("SELECT MAX(id) FROM sesion_atencion");
+//            rs = ps.executeQuery();
+//            if (rs.next()) {
+//                id = rs.getInt(1) + 1;
+//            }
+//            ps = con.prepareStatement(sql);
+//            System.out.println("EL MAXIMO OBTENIDO ES : " + id);
+//            ps.setInt(1, id);
+//            //ps.setString(id, sql);
+//            //ps.setDate(2, date);
+//            //ps.setDate(3, date);
+//            ps.setDate(2, sesionAtencion.getFecha_inicio());
+//            ps.setDate(3, sesionAtencion.getFecha_termino());
+//            ps.setInt(4, sesionAtencion.getCantidad_comensales());
+//            ps.setInt(5, sesionAtencion.getCliente());
+//            ps.setInt(6, sesionAtencion.getMesa());
+//            ps.setString(7, sesionAtencion.getUsuario());
+//            System.out.println("ejecuta");
+//            ps.execute();
+//            con.close();
+//            return true;
+//        } catch (SQLException e) {
+//            System.err.println(e);
+//            e.printStackTrace();
+//            throw new IllegalArgumentException(e.getMessage());
+//        }
+//    }
 
     public boolean eliminar(int id) {
         PreparedStatement ps = null;

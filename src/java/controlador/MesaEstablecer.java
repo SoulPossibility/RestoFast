@@ -6,7 +6,9 @@
 package controlador;
 
 import dao.ClienteDAO;
+import dao.FuncionarioDAO;
 import dao.MesaDAO;
+import dao.RolDAO;
 import dao.SesionAtencionDAO;
 import dao.UsuarioDAO;
 import java.io.IOException;
@@ -23,7 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Cliente;
+import modelo.Funcionario;
 import modelo.Mesa;
+import modelo.Rol;
 import modelo.SesionAtencion;
 import modelo.Usuario;
 
@@ -61,15 +65,37 @@ public class MesaEstablecer extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        
+        //DATA ACCESS OBJETCS
         MesaDAO mesaDAO = new MesaDAO();
         UsuarioDAO usuarioDAO = new UsuarioDAO();
+        RolDAO rolDAO = new RolDAO();
+        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+
+        //VARIABLES TIPO LISTAS
         ArrayList<Mesa> listaMesas = new ArrayList<>();
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+        ArrayList<Rol> listaRoles = new ArrayList<>();
+        ArrayList<Funcionario> listaFuncionarios = new ArrayList<>();
 
-        listaUsuarios = usuarioDAO.listar();
+        listaUsuarios = usuarioDAO.listarGarzonesSinObjetos();
         listaMesas = mesaDAO.listar();
+        listaRoles = rolDAO.listar();
+        listaFuncionarios = funcionarioDAO.listar();
 
+        //ASIGNACION DE FUNCIONARIO Y ROL A LOS USUARIOS
+        for (Usuario usu : listaUsuarios) {
+            for (Funcionario fun : listaFuncionarios) {
+                if (usu.getRutFuncionario().equals(fun.getRun())) {
+                    usu.setFuncionario(fun);
+                }
+            }
+            for (Rol rol : listaRoles) {
+                if (usu.getId_rol() == rol.getId()) {
+                    usu.setRol(rol);
+                }
+            }
+        }
+        
         request.setAttribute("mesas", listaMesas);
         request.setAttribute("usuarios", listaUsuarios);
 
@@ -108,7 +134,7 @@ public class MesaEstablecer extends HttpServlet {
             //BLOQUE PARA OBTENER LA FECHA ACTUAL
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Calendar cal = Calendar.getInstance();
-            
+
             java.util.Date fechaAux = cal.getTime();
             java.sql.Date fechaInicio = new java.sql.Date(fechaAux.getTime());
 
@@ -122,7 +148,8 @@ public class MesaEstablecer extends HttpServlet {
         }
 
         //session.setAttribute("mesaEstablecida", mesaEscogida);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        //request.getRequestDispatcher("index.jsp").forward(request, response);
+        response.sendRedirect("MesaEstablecer");
         processRequest(request, response);
     }
 

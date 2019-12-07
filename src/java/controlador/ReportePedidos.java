@@ -59,14 +59,14 @@ public class ReportePedidos extends HttpServlet {
         
         listaPedidos = pedidoDAO.listar();
         detallePedidos = detallePedidoDAO.listar();
-        listaProductos = productoDAO.listar();
+        listaProductos = productoDAO.listarMSP();
         listaUsuarios = usuarioDAO.listarSinObjetos();
         listaProveedores = proveedorDAO.listar();
 
         //PRODUCTOS
         for (Producto producto : listaProductos) {
             for (Proveedor proveedor : listaProveedores) {
-                if (producto.getIdProveedor() == proveedor.getId()) {
+                if (producto.getId() == proveedor.getId()) {
                     producto.setProveedor(proveedor);
                 }
             }
@@ -126,23 +126,6 @@ public class ReportePedidos extends HttpServlet {
                 }
             }
         }
-        
-//        for (int i = 0; i < listaPedidosGraph.size(); i++) {
-//            for (int j = 0; j < listaPedidosGraph.get(i).getListaDetalle().size(); j++) {
-//                for (int k = 0; k < listaProductos.size(); k++) {
-//                    if (listaProductos.get(k).getId() == listaPedidosGraph.get(i).getListaDetalle().get(j).getProducto_id()) {
-//                        listaPedidosGraph.get(i).getListaDetalle().get(j).setProducto(listaProductos.get(k));
-//                        
-//                    }
-//                }
-//            }
-//        }
-        
-//        for (PedidosGraficoDTO pedidosGraficoDTO : listaPedidosGraph) {
-//            for (DetallePedido detallePedido : pedidosGraficoDTO.getListaDetalle()) {
-//                System.out.println("-- " + detallePedido.getProducto().getNombre());
-//            }
-//        }
         
         for (PedidosGraficoDTO pgdto : listaPedidosGraph) {
             System.out.println("info Valor: " + pgdto.getValorMaximo());

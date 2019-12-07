@@ -80,16 +80,16 @@ public class Controller extends HttpServlet {
                         request.getRequestDispatcher("registrarProveedor.jsp").forward(request, response);
                     } else if (rolUsuario == 3) {//COCINERO
                         session.setAttribute("sesionUsuario", user);
-                        request.getRequestDispatcher("CocineroPedidos").forward(request, response);
+                        request.getRequestDispatcher("CocineroPedidos?comando=cargar").forward(request, response);
                     } else if (rolUsuario == 4) {//BARTENDER
                         session.setAttribute("sesionUsuario", user);
                         request.getRequestDispatcher("registrarProveedor.jsp").forward(request, response);
                     } else if (rolUsuario == 5) {//GARZON
                         session.setAttribute("sesionUsuario", user);
-                        request.getRequestDispatcher("registrarProveedor.jsp").forward(request, response);
+                        request.getRequestDispatcher("adminMenu.jsp").forward(request, response);
                     } else if (rolUsuario == 6) {//BODEGUERO
                         session.setAttribute("sesionUsuario", user);
-                        request.getRequestDispatcher("registrarProveedor.jsp").forward(request, response);
+                        request.getRequestDispatcher("menuBodeguero.jsp").forward(request, response);
                     }
                 } else {
                     request.setAttribute("msg", "Error, usuario no reconocido");

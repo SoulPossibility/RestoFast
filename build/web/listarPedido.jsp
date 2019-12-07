@@ -13,11 +13,34 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Listado de Pedidos</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+       
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">
+
+        <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/owl.carousel.min.css">
+        <link rel="stylesheet" href="css/owl.theme.default.min.css">
+        <link rel="stylesheet" href="css/magnific-popup.css">
+        <link rel="stylesheet" href="css/aos.css">
+        <link rel="stylesheet" href="css/ionicons.min.css">
+
+        <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+        <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+        <link rel="stylesheet" href="css/flaticon.css">
+        <link rel="stylesheet" href="css/icomoon.css">
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
+        
+        <jsp:include page="nav.jsp"/>
+        
         <h1></h1>
         <div class="container">
             <tr><h1><div class="text-center">Listado de Pedido registrados</div></h1></tr>
@@ -28,6 +51,7 @@
                     <th scope="col">Fecha Solicitud</th>
                     <th scope="col">Estado</th>
                     <th scope="col">Nombre Funcionario</th>
+                    <th scope="col">Detalle</th>
                     <th scope="col">Modificar</th>
                     <th scope="col">Eliminar</th>
                 </tr>
@@ -39,14 +63,13 @@
                         <td>${pedi.fecha_solicitud}</td>
                         <td>${pedi.estado} </td>
                         <td>${pedi.usuario_nombre_usuario}</td>
-                        <td><a href="modificarPedido.jsp">Modificar</a></td>
+                        <td><a href="ListarDetallePedidoID?id=${pedi.id}">Detalle</a></td>
+                        <td><a href="ObtenerPedido?id=${pedi.id}">Modificar</a></td>
                         <td><a href="EliminarPedido?id=${pedi.id}">Eliminar</a></td>
-
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
-    </div>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+    </div>   
 </body>
 </html>

@@ -46,104 +46,123 @@ public class ReporteMenus extends HttpServlet {
 //        int mes = Integer.parseInt(request.getParameter("mes"));
 //        int anno = Integer.parseInt(request.getParameter("anno"));
 
+        boolean exito = true;
         String fechaMenu = request.getParameter("fechaReporteMenu");
         String[] arregloFechaMenu = fechaMenu.split("-");
+        int anno = 0;
+        int mes = 0;
+        int dia = 0;
 
-        int anno = Integer.parseInt(arregloFechaMenu[0]);
-        int mes = Integer.parseInt(arregloFechaMenu[1]);
-        int dia = Integer.parseInt(arregloFechaMenu[2]);
-
-        ArrayList<Orden> listaOrden = new ArrayList<>();
-        ArrayList<Orden> listaOrdenAux = new ArrayList<>();
-        ArrayList<Menu> listaMenu = new ArrayList<>();
-        ArrayList<SesionAtencion> listaSesionAten = new ArrayList<>();
-        ArrayList<MenuGraficoDTO> ordenesGraph = new ArrayList<>();
-
-        ArrayList<MenuGraficoDTO> listaGraphComestibles = new ArrayList<>();
-        ArrayList<MenuGraficoDTO> listaGraphBebestibles = new ArrayList<>();
-
-        OrdenDAO ordenDAO = new OrdenDAO();
-        MenuDAO menuDAO = new MenuDAO();
-        SesionAtencionDAO sesionAtenDAO = new SesionAtencionDAO();
-
-        listaOrden = ordenDAO.listarSinObjetos();
-        listaMenu = menuDAO.listar();
-        listaSesionAten = sesionAtenDAO.listarSinObjetos();
-
-        for (Orden orden : listaOrden) {
-            for (Menu menu : listaMenu) {
-                if (menu.getCodigo().equals(orden.getCodigoMenu())) {
-                    orden.setMenu(menu);
-                }
-            }
+        try {
+            anno = Integer.parseInt(arregloFechaMenu[0]);
+            mes = Integer.parseInt(arregloFechaMenu[1]);
+            dia = Integer.parseInt(arregloFechaMenu[2]);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            exito = false;
         }
-        for (Menu menu : listaMenu) {
-            int cantidadMaxima = 0;
-            int precioMaximo = 0;
-            MenuGraficoDTO menuGrafico = new MenuGraficoDTO();
-            menuGrafico.setMenu(menu);
+
+        if (exito) {
+            ArrayList<Orden> listaOrden = new ArrayList<>();
+            ArrayList<Orden> listaOrdenAux = new ArrayList<>();
+            ArrayList<Menu> listaMenu = new ArrayList<>();
+            ArrayList<SesionAtencion> listaSesionAten = new ArrayList<>();
+            ArrayList<MenuGraficoDTO> ordenesGraph = new ArrayList<>();
+
+            ArrayList<MenuGraficoDTO> listaGraphComestibles = new ArrayList<>();
+            ArrayList<MenuGraficoDTO> listaGraphBebestibles = new ArrayList<>();
+
+            OrdenDAO ordenDAO = new OrdenDAO();
+            MenuDAO menuDAO = new MenuDAO();
+            SesionAtencionDAO sesionAtenDAO = new SesionAtencionDAO();
+
+            listaOrden = ordenDAO.listarSinObjetos();
+            listaMenu = menuDAO.listar();
+            listaSesionAten = sesionAtenDAO.listarSinObjetos();
+
             for (Orden orden : listaOrden) {
-                Date date = orden.getFecha();
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(date);
-
-                //MONTH + 1, POR QUE LOS MESES PARTEN DESDE 0 HASTA 11
-                if (menu.getCodigo().equals(orden.getCodigoMenu())
-                        && anno == cal.get(Calendar.YEAR) && mes == cal.get(Calendar.MONTH) + 1 && dia == cal.get(Calendar.DAY_OF_MONTH)) {
-                    cantidadMaxima += orden.getCantidad();
-                    precioMaximo += orden.getMenu().getPrecio() * orden.getCantidad();
+                for (Menu menu : listaMenu) {
+                    if (menu.getCodigo().equals(orden.getCodigoMenu())) {
+                        orden.setMenu(menu);
+                    }
                 }
             }
-            menuGrafico.setCantidad(cantidadMaxima);
-            menuGrafico.setPrecioMaximo(precioMaximo);
-            ordenesGraph.add(menuGrafico);
-            
-            //AGREGAR ELEMENTOS A LOS ARRAYLIST SEGÚN TIPO COMESTIBLE O BEBESTIBLE
-            if (menuGrafico.getMenu().getTipo().equalsIgnoreCase("Plato") || menuGrafico.getMenu().getTipo().equalsIgnoreCase("Postre")) {
-                listaGraphComestibles.add(menuGrafico);
-            } else if (menuGrafico.getMenu().getTipo().equalsIgnoreCase("Bebida") || menuGrafico.getMenu().getTipo().equalsIgnoreCase("Alcohol")) {
-                listaGraphBebestibles.add(menuGrafico);
-            }
-        }
+            for (Menu menu : listaMenu) {
+                int cantidadMaxima = 0;
+                int precioMaximo = 0;
+                MenuGraficoDTO menuGrafico = new MenuGraficoDTO();
+                menuGrafico.setMenu(menu);
+                for (Orden orden : listaOrden) {
+                    Date date = orden.getFecha();
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(date);
 
-        //ARREGLO QUE SE DESPLEGARA EN JAVASCRIPT
-        String arregloMenus = "[";
-        for (int i = 0; i < ordenesGraph.size(); i++) {
-            //var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            if (i == ordenesGraph.size() - 1) {
-                arregloMenus += "'" + ordenesGraph.get(i).getMenu().getCodigo() + "'";
-            } else {
-                arregloMenus += "'" + ordenesGraph.get(i).getMenu().getCodigo() + "',";
+                    //MONTH + 1, POR QUE LOS MESES PARTEN DESDE 0 HASTA 11
+                    if (menu.getCodigo().equals(orden.getCodigoMenu())
+                            && anno == cal.get(Calendar.YEAR) && mes == cal.get(Calendar.MONTH) + 1 && dia == cal.get(Calendar.DAY_OF_MONTH)) {
+                        cantidadMaxima += orden.getCantidad();
+                        precioMaximo += orden.getMenu().getPrecio() * orden.getCantidad();
+                    }
+                }
+                menuGrafico.setCantidad(cantidadMaxima);
+                menuGrafico.setPrecioMaximo(precioMaximo);
+                ordenesGraph.add(menuGrafico);
+
+                //AGREGAR ELEMENTOS A LOS ARRAYLIST SEGÚN TIPO COMESTIBLE O BEBESTIBLE
+                if (menuGrafico.getMenu().getTipo().equalsIgnoreCase("Plato") || menuGrafico.getMenu().getTipo().equalsIgnoreCase("Postre")) {
+                    listaGraphComestibles.add(menuGrafico);
+                } else if (menuGrafico.getMenu().getTipo().equalsIgnoreCase("Bebida") || menuGrafico.getMenu().getTipo().equalsIgnoreCase("Alcohol")) {
+                    listaGraphBebestibles.add(menuGrafico);
+                }
             }
-        }
-        arregloMenus += "]";
-        
-        String arregloComestibles = completarComestibles(listaGraphComestibles);
-        String arregloBebestibles = completarBebestibles(listaGraphBebestibles);
+
+            //ARREGLO QUE SE DESPLEGARA EN JAVASCRIPT
+            String arregloMenus = "[";
+            for (int i = 0; i < ordenesGraph.size(); i++) {
+                //var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                if (i == ordenesGraph.size() - 1) {
+                    arregloMenus += "'" + ordenesGraph.get(i).getMenu().getCodigo() + "'";
+                } else {
+                    arregloMenus += "'" + ordenesGraph.get(i).getMenu().getCodigo() + "',";
+                }
+            }
+            arregloMenus += "]";
+
+            String arregloComestibles = completarComestibles(listaGraphComestibles);
+            String arregloBebestibles = completarBebestibles(listaGraphBebestibles);
 
 //        for (MenuGraficoDTO mnGraph : ordenesGraph) {
 //            System.out.println("-- " + mnGraph.getMenu().getNombre());
 //            System.out.println("-- " + mnGraph.getCantidad());
 //            System.out.println("-- " + mnGraph.getPrecioMaximo());
 //        }
-        request.setAttribute("ordenesGraph", ordenesGraph);
-        request.setAttribute("arregloMenus", arregloMenus);
-        
-        System.out.println(arregloComestibles);
-        System.out.println(arregloBebestibles);
-        for (MenuGraficoDTO listaGraphComestible : listaGraphComestibles) {
-            System.out.println("comida: " + listaGraphComestible.getCantidad());
+            request.setAttribute("ordenesGraph", ordenesGraph);
+            request.setAttribute("arregloMenus", arregloMenus);
+
+            System.out.println(arregloComestibles);
+            System.out.println(arregloBebestibles);
+            for (MenuGraficoDTO listaGraphComestible : listaGraphComestibles) {
+                System.out.println("comida: " + listaGraphComestible.getCantidad());
+            }
+            for (MenuGraficoDTO listaGraphBebestible : listaGraphBebestibles) {
+                System.out.println("bebida: " + listaGraphBebestible.getCantidad());
+            }
+            
+            String fechaEscogida = dia + "/" + mes + "/" + anno;
+
+            request.setAttribute("listaGraphComestibles", listaGraphComestibles);
+            request.setAttribute("listaGraphBebestibles", listaGraphBebestibles);
+            request.setAttribute("arregloComestibles", arregloComestibles);
+            request.setAttribute("arregloBebestibles", arregloBebestibles);
+            request.setAttribute("fechaEscogida", fechaEscogida);
+
+            request.getRequestDispatcher("reporteMenus.jsp").forward(request, response);
         }
-        for (MenuGraficoDTO listaGraphBebestible : listaGraphBebestibles) {
-            System.out.println("bebida: " + listaGraphBebestible.getCantidad());
+        else{
+            request.setAttribute("msgError", "Ingrese un formato válido en fecha");
+            request.getRequestDispatcher("adminReportes.jsp").forward(request, response);
         }
-        
-        request.setAttribute("listaGraphComestibles", listaGraphComestibles);
-        request.setAttribute("listaGraphBebestibles", listaGraphBebestibles);
-        request.setAttribute("arregloComestibles", arregloComestibles);
-        request.setAttribute("arregloBebestibles", arregloBebestibles);
-        
-        request.getRequestDispatcher("reporteMenus.jsp").forward(request, response);
+
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -198,7 +217,7 @@ public class ReporteMenus extends HttpServlet {
         arregloComestibles += "]";
         return arregloComestibles;
     }
-    
+
     private String completarBebestibles(ArrayList<MenuGraficoDTO> bebestibles) {
         String arregloBebestibles = "[";
         for (int i = 0; i < bebestibles.size(); i++) {

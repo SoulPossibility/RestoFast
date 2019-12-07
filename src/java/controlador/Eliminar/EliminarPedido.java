@@ -32,7 +32,7 @@ public class EliminarPedido extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         int id = Integer.parseInt(request.getParameter("id"));
         
         PedidoDAO pedidoDAO = new PedidoDAO();

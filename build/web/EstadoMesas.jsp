@@ -34,10 +34,9 @@
         <div class="container" class="row">
             <div class="p-3 mb-2 bg-info text-white  ">
 
-                <h1 class=" ">Estado De Las Mesas</h1>
+                <h1 class="">Estado De Las Mesas</h1>
                 <c:if test="${mesas > 0}">  
                     <h4>Mesas Registradas en : ${nombreSistema} = ${mesas}</h4>
-
                 </c:if>
             </div>
 

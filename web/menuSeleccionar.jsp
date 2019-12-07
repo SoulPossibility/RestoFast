@@ -40,22 +40,68 @@
         <jsp:include page="nav.jsp"/>
 
         <div class="container">
-            <div class="row justify-content-center mb-5 pb-3 mt-5 pt-5">
-                <div class="col-md-7 heading-section text-center ftco-animate">
-                    <h2 class="mb-4">NUESTRO MENÚ</h2>
-                    <p>Mesa: ${sessionScope.mesaEstablecida.numero}</p>
-                    <p class="flip"><span class="deg1"></span><span class="deg2"></span><span class="deg3"></span></p>
-                    <p class="mt-5">Los mejores platos y bebidas, escoga de nuestra selecta variedad de platos producidos por el mejor talento culinario.</p>
+            <c:if test="${fn:length(carrito) eq 0}">
+                <div class="row justify-content-center mb-5 pb-3 mt-5 pt-5">
+                    <div class="col-md-7 heading-section text-center ftco-animate">
+                        <h2 class="mb-4">NUESTRO MENÚ</h2>
+                        <p>Mesa: ${sessionScope.mesaEstablecida.numero}</p>
+                        <p class="flip"><span class="deg1"></span><span class="deg2"></span><span class="deg3"></span></p>
+                        <p class="mt-5">Los mejores platos y bebidas, escoga de nuestra selecta variedad de platos producidos por el mejor talento culinario.</p>
+                    </div>
                 </div>
-            </div>
+            </c:if>
+
+            <c:if test="${fn:length(carrito) gt 0}">
+                <div class="row justify-content-center mb-5 pb-3 mt-5 pt-5">
+                    <div class="col-md-7 heading-section text-center ftco-animate">
+                        <h2 class="mb-4">SELECCIONADO DEL MENÚ</h2>
+                        <p class="flip"><span class="deg1"></span><span class="deg2"></span><span class="deg3"></span></p>
+                        <p class="mt-5">Los mejores platos y bebidas, escoga de nuestra selecta variedad de platos producidos por el mejor talento culinario.</p>
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Tiempo de preparacion</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                                <th>Opcion</th>
+                            </tr>
+                            <tbody>
+                                <c:forEach items="${carrito}" var="item">
+                                    <tr>
+                                        <td>${item.menu.nombre}</td>
+                                        <td>${item.menu.tiempoPreparacion}</td>
+                                        <td>${item.cantidad}</td>
+                                        <td>${item.precio}</td>
+                                        <td>
+                                            <a href="MenuGestion?codigoEliminacion=${item.menu.codigo}&totalCarrito=${totalCarrito}">Eliminar</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                <tr><td></td><td></td><td></td><td>TOTAL:</td><td>${totalCarrito}</td></tr>
+                            </tbody>
+                        </table>
+                        <form method="POST" action="ClienteRealizarPedido">
+                            <c:forEach items="${sessionScope.carrito}" var="menu">
+                                <input name="idmenu" type="hidden" value="${item.menu.codigo}"/>
+                            </c:forEach>
+                            <button class="btn btn-warning col-4" type="submit">REALIZAR PEDIDO</button>
+
+                            <!--                            Birthday:
+                                                        <input type="date" name="dateValue">
+                                                        <input type="submit">-->
+                        </form>
+                    </div>
+                </div>
+            </c:if>
+            
             <div class="row">
                 <div class="col-md-6">
                     <p>PLATOS PRINCIPALES</p>
                     <c:forEach items="${platos}" var="plato">
                         <a class="" href="MenuSeleccionarCantidad?cliente=1&menu=${plato.codigo}">
                             <div class="pricing-entry d-flex ftco-animate">
-<!--                                <div class="img" style="background-image: url(images/pizza-1.jpg);"></div>-->
-                                <div class="img" style="background-image: url('images/${plato.nombre}.jpg'); background-size: 100% 100%;"></div>
+                                <!--                                <div class="img" style="background-image: url(images/pizza-1.jpg);"></div>-->
+                                <div class="img" style="background-image: url('images/${plato.nombre}.jpg'); background-size: 100% 100%; "></div>
                                 <div class="desc pl-3">
                                     <div class="d-flex text align-items-center">
                                         <h3><span>${plato.nombre}</span></h3>
@@ -116,49 +162,8 @@
             </div>
 
 
+            
 
-            <c:if test="${fn:length(carrito) gt 0}">
-                <div class="row justify-content-center mb-5 pb-3 mt-5 pt-5">
-                    <div class="col-md-7 heading-section text-center ftco-animate">
-                        <h2 class="mb-4">SELECCIÒN:</h2>
-                        <p class="flip"><span class="deg1"></span><span class="deg2"></span><span class="deg3"></span></p>
-                        <p class="mt-5">Los mejores platos y bebidas, escoga de nuestra selecta variedad de platos producidos por el mejor talento culinario.</p>
-                        <table class="table table-striped">
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Tiempo de preparacion</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th>Opcion</th>
-                            </tr>
-                            <tbody>
-                                <c:forEach items="${carrito}" var="item">
-                                    <tr>
-                                        <td>${item.menu.nombre}</td>
-                                        <td>${item.menu.tiempoPreparacion}</td>
-                                        <td>${item.cantidad}</td>
-                                        <td>${item.precio}</td>
-                                        <td>
-                                            <a href="MenuGestion?codigoEliminacion=${item.menu.codigo}&totalCarrito=${totalCarrito}">Eliminar</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                <tr><td></td><td></td><td></td><td>TOTAL:</td><td>${totalCarrito}</td></tr>
-                            </tbody>
-                        </table>
-                        <form method="POST" action="ClienteRealizarPedido">
-                            <c:forEach items="${sessionScope.carrito}" var="menu">
-                                <input name="idmenu" type="hidden" value="${item.menu.codigo}"/>
-                            </c:forEach>
-                            <button class="btn btn-warning" type="submit">REALIZAR PEDIDO</button>
-
-                            <!--                            Birthday:
-                                                        <input type="date" name="dateValue">
-                                                        <input type="submit">-->
-                        </form>
-                    </div>
-                </div>
-            </c:if>
 
         </div>
 

@@ -34,22 +34,21 @@ public class ListarPedido extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            //Instancia de variables
+        //Instancia de variables
         ArrayList<Pedido> listarPedido = new ArrayList<>();
         //Instancia de clases de tipo consulta
-        PedidoDAO pedidoDAO = new PedidoDAO(); 
-        
+        PedidoDAO pedidoDAO = new PedidoDAO();
+
         //Listo todos los proveedores desde la BDD y los asigno a la variable lista de proveedores previamente creada
         listarPedido = pedidoDAO.listar();
-        
+
         //Asigno que objetos quiero mandar hacia una página JSP, para su posterior visualización
         //Puede ser cualquier objeto, arraylist, int, string, etc...
         request.setAttribute("pedido", listarPedido);
-        
-        
+
         //Redirecciono a la página deseada, internamente manda los atributos recien seteados
         request.getRequestDispatcher("listarPedido.jsp").forward(request, response);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

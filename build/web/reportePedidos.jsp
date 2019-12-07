@@ -29,57 +29,69 @@
     <body style="background-image: none;">
         <jsp:include page="nav.jsp"/>
         <div class="container">
-            <div style="width:100%;">
-                <div class="row">
-                    <div class="col-12">
-                        <canvas id="canvas"></canvas>
+            <div class="card">
+                <div class="card-header">
+                    Grafico pedidos
+                </div>
+                <div class="card-body">
+                    <div class="alert-primary shadow">
+                        Inforamción relativa a la cantidad de solicitudes de productos realizados en los últimos 12 meses.
+                        Los productos fueron solicitados por el rol de bodega.
                     </div>
-                    <div class="col-6">
+                    <br/>
+                    <div style="width:100%;">
+                        <div class="row">
+                            <div class="col-12">
+                                <canvas id="canvas"></canvas>
+                            </div>
+                            <div class="col-6">
 
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div>
+                        <table class="table table-stripped table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Enero</th>
+                                    <th>Febrero</th>
+                                    <th>Marzo</th>
+                                    <th>Abril</th>
+                                    <th>Mayo</th>
+                                    <th>Junio</th>
+                                    <th>Julio</th>
+                                    <th>Agosto</th>
+                                    <th>Septiembre</th>
+                                    <th>Octubre</th>
+                                    <th>Noviembre</th>
+                                    <th>Diciembre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <c:forEach items="${pedidosGraph}" var="columna">
+                                        <td>${columna.valorMaximo}</td>
+                                    </c:forEach>
+                                </tr>
+                                <tr>
+                                    <c:forEach items="${pedidosGraph}" var="columna">
+                                        <td>${columna.cantidadMaxima}</td>
+                                    </c:forEach>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
             </div>
-            <br>
-            <br>
             <!--            <button id="randomizeData">Randomize Data</button>
                         <button id="addDataset">Add Dataset</button>
                         <button id="removeDataset">Remove Dataset</button>
                         <button id="addData">Add Data</button>
                         <button id="removeData">Remove Data</button>-->
 
-            <div>
-                <table class="table table-stripped table-sm">
-                    <thead>
-                        <tr>
-                            <th>Enero</th>
-                            <th>Febrero</th>
-                            <th>Marzo</th>
-                            <th>Abril</th>
-                            <th>Mayo</th>
-                            <th>Junio</th>
-                            <th>Julio</th>
-                            <th>Agosto</th>
-                            <th>Septiembre</th>
-                            <th>Octubre</th>
-                            <th>Noviembre</th>
-                            <th>Diciembre</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <c:forEach items="${pedidosGraph}" var="columna">
-                                <td>${columna.valorMaximo}</td>
-                            </c:forEach>
-                        </tr>
-                        <tr>
-                            <c:forEach items="${pedidosGraph}" var="columna">
-                                <td>${columna.cantidadMaxima}</td>
-                            </c:forEach>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+
         </div>
 
 
@@ -138,7 +150,7 @@
 //                                randomScalingFactor()
 //                            ],
                         //}
-                        ]
+                    ]
                 },
                 options: {
                     responsive: true,

@@ -19,6 +19,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -56,7 +58,11 @@ public class ClienteRealizarPedido extends HttpServlet {
         
         OrdenDAO ordenDAO = new OrdenDAO();
 
+        //FECHA
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        //PARA ASIGNTAR ZONA DE CHILE COMO FECHA, INDEPENDIENTE DE LA UBICACIÓN DEL SERVIDOR
+        TimeZone timeZone = TimeZone.getTimeZone("America/Santiago");
+        dateFormat.setTimeZone(timeZone);
         Calendar cal = Calendar.getInstance();
         System.out.println(dateFormat.format(cal.getTime()));
 

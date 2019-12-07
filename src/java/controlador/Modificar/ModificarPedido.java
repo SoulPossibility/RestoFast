@@ -12,12 +12,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Pedido;
+import dao.PedidoDAO;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
  * @author femxn
  */
-@WebServlet(name = "modificarPedido", urlPatterns = {"/modificarPedido"})
+@WebServlet(name = "ModificarPedido", urlPatterns = {"/ModificarPedido"})
 public class ModificarPedido extends HttpServlet {
 
     /**
@@ -32,10 +36,38 @@ public class ModificarPedido extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-         int pedido_id = Integer.parseInt("pedido_id");
+        int pedido_id = Integer.parseInt(request.getParameter("pedido_id"));
+        String fecha_solicitud = request.getParameter("fecha_solicitud");
         
-         request.setAttribute("codPedido", "");
+        try {
+            SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date fechaAux = simpleDate.parse(fecha_solicitud);
+            java.sql.Date fecha = new java.sql.Date(fechaAux.getTime());
+            System.out.println(fecha);
+            String estado = request.getParameter("estado");
+            String usuario_nombre_usuario = request.getParameter("usuario_nombre_usuario");
+           
+            PedidoDAO pedidoDAO = new PedidoDAO();
+
+            System.out.println("Código Pedido: " + pedido_id + ", Fecha Solicitud: " + fecha_solicitud
+                    + ", Estado: " + estado + ", Nombre de Funcionario: " + usuario_nombre_usuario);
+
+            Pedido pedi = pedidoDAO.buscar(pedido_id);
+            
+            pedi.setFecha_solicitud(fecha);
+            pedi.setEstado(estado);
+            pedi.setUsuario_nombre_usuario(usuario_nombre_usuario);
+
+            //Registrar proveedor en la base de datos
+            pedidoDAO.update(pedi);
+
+        } catch (Exception e) {
+            
+        }
+        //Redirecciono hacia otra página
+        request.getRequestDispatcher("ListarPedido").forward(request, response);
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

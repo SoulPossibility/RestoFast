@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,7 +67,7 @@ public class ClientePantallaInicio extends HttpServlet {
             while (ch != -1) {
                 System.out.print((char) ch);
                 if (ch != -1) {
-                    numeroMesa = "" + (char) ch;
+                    numeroMesa+= "" + (char) ch;
                     System.out.println("mesa seleccionada: " + numeroMesa);
                 }
                 //PASA AL SIGUIENTE CARACTER
@@ -78,7 +79,19 @@ public class ClientePantallaInicio extends HttpServlet {
             e.getStackTrace();
         }
 
-
+        //numeroMesa = session.getAttribute("configuracionMesa").toString();
+        Cookie[] mesaCookies = request.getCookies();
+        if (mesaCookies != null) {
+            for (Cookie cookie : mesaCookies) {
+                if ("numeroMesa.numero".equals(cookie.getName())) {
+                    numeroMesa = cookie.getValue();
+                    System.out.println("OBTENIENDO VALOR DE LA COOKIE: " + numeroMesa);
+                    break;
+                }
+            }
+        }
+        
+        
         Mesa nuevaMesa = mesaDAO.buscar(Integer.parseInt(numeroMesa));
         session.setAttribute("mesaEstablecida", nuevaMesa);
         Mesa mesaSesion = (Mesa) session.getAttribute("mesaEstablecida");

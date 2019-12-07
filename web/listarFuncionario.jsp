@@ -48,7 +48,7 @@
                             <th data-field="name">Fecha Nacimiento</th>
                             <th data-field="name">Email</th>
                             <th data-field="name">Sueldo Base</th>
-                            <th data-field="name">Editar</th>
+                     
                             <th data-field="name">Eliminar</th>
                     <tbody>
                         <tr>
@@ -62,7 +62,7 @@
                                 <td>${fn.fechaNacimiento}</td>
                                 <td>${fn.email}</td>
                                 <td>${fn.sueldoBase}</td>
-                                <td><a class="waves-effect waves-light btn"><i class="material-icons left">edit</i></a></td>
+                                
                                 <td>  <a href="EliminarFuncionario?run=${fn.run}" class="waves-effect waves-light btn"><i class="material-icons left">clear</i></a></td>
 
                             </tr>      
@@ -74,7 +74,7 @@
             </ul>
             <br/>
 
-            <a href="index.jsp" class="waves-effect waves-red btn" >Volver</a>
+            <a href="adminMenu.jsp" class="waves-effect waves-red btn" >Volver</a>
 
 
 

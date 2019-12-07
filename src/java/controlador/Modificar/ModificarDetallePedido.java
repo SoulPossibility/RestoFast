@@ -5,6 +5,7 @@
  */
 package controlador.Modificar;
 
+import dao.DetallePedidoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.DetallePedido;
 
 /**
  *
@@ -31,19 +33,30 @@ public class ModificarDetallePedido extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ModificarDetallePedido</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ModificarDetallePedido at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
+        int pedido_id = Integer.parseInt(request.getParameter("pedido_id"));
+        int producto_id = Integer.parseInt(request.getParameter("producto_id"));
+        int cantidad = Integer.parseInt(request.getParameter("cantidad"));       
+        
+
+        DetallePedidoDAO detallePedidoDAO = new DetallePedidoDAO();
+
+        System.out.println("Código Pedido: " + pedido_id + ", Código prd    : "
+        + producto_id + ", Cantidad: " + cantidad);
+        
+        DetallePedido delPedi = detallePedidoDAO.buscar(pedido_id, producto_id);
+        
+       int total = (delPedi.getValor() / delPedi.getCantidad())* cantidad;
+        
+        delPedi.setCantidad(cantidad);
+        delPedi.setValor(total);
+        
+        detallePedidoDAO.update(delPedi);    
+                
+        request.setAttribute("id", pedido_id);    
+        
+        request.getRequestDispatcher("ListarPedido").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -48,7 +48,7 @@ public class AdminReportes extends HttpServlet {
         
         listaPedidos = pedidoDAO.listar();
         detallePedidos = detallePedidoDAO.listar();
-        listaProductos = productoDAO.listar();
+        listaProductos = productoDAO.listarMSP();
         
         
     }

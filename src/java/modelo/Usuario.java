@@ -51,6 +51,22 @@ public class Usuario {
         this.password = password;
     }
 
+    public int getId_rol() {
+        return id_rol;
+    }
+
+    public void setId_rol(int id_rol) {
+        this.id_rol = id_rol;
+    }
+
+    public String getRutFuncionario() {
+        return rutFuncionario;
+    }
+
+    public void setRutFuncionario(String rutFuncionario) {
+        this.rutFuncionario = rutFuncionario;
+    }
+
     public Rol getRol() {
         return rol;
     }
@@ -66,5 +82,7 @@ public class Usuario {
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
     }
+
+    
 
 }

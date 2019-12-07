@@ -3,8 +3,8 @@
     Created on : 01-10-2019, 13:22:16
     Author     : BlueOcean
 --%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="date" class="java.util.Date"/>
 <!DOCTYPE html>
@@ -44,6 +44,7 @@
             <h2><c:out value="${sessionScope.sesionUsuario.rol.descripcion}"/></h2>
             <div class="card p-4">
                 <div class="container">
+                    
                     <div class="table-responsive">
                         <table id="example" class="table table-hover" style="width:100%; font-size: 0.9rem; color: black;">
                             <thead>
@@ -64,14 +65,14 @@
                                         <td>${orden.menu.nombre}</td>
                                         <td>${orden.menu.tipo}</td>
                                         <td>${orden.cantidad}</td>
-                                        <td><fmt:formatDate var="time"  
-                                                    value="${orden.fecha}"
-                                                    pattern="YYdd"/>
-                                <br/>${time}</td>
-                                <td>${orden.sesionAtencion.mesa}</td>
-                                <td><a class="btn conluirOrden" href="">Terminar</a></td>
-                                </tr>
-                            </c:forEach>
+                                        <td><fmt:formatDate var="tiempo"  
+                                                        value="${orden.fecha}"
+                                                        pattern="HH : mm"/>
+                                            ${tiempo} hrs
+                                        <td>${orden.sesionAtencion.mesa}</td>
+                                        <td><a class="btn conluirOrden" href="CocineroPedidos?orden=${orden.id}&comando=actualizar">Terminado</a></td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>

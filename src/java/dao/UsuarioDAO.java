@@ -145,6 +145,29 @@ public class UsuarioDAO {
             return lista;
         }
     }
+    
+    public ArrayList<Usuario> listarGarzonesSinObjetos() {
+        ArrayList<Usuario> lista = new ArrayList<>();
+        Statement st;
+        ResultSet rs;
+        Connection con = new Conexion().conectar();
+        String sql = "SELECT * FROM usuario WHERE rol_id = 5";
+        
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                //Buscar rol
+                Usuario usuario = new Usuario(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
+                lista.add(usuario);
+            }
+            con.close();
+            return lista;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return lista;
+        }
+    }
 
     public int iniciarSesion(Usuario usu) {
         PreparedStatement ps = null;

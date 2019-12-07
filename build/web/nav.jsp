@@ -8,39 +8,41 @@
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
                 <c:if test="${sessionScope.sesionUsuario.rol.id == 1}">
-                    <li class="nav-item"><a href="index.jsp" class="nav-link">Inicio de prueba</a></li>
+                    <li class="nav-item"><a href="index23.jsp" class="nav-link">Inicio de prueba</a></li>
                     <li class="nav-item"><a href="adminMenu.jsp" class="nav-link">Menu principal</a></li>
                     <li class="nav-item"><a href="EstadoMesa" class="nav-link">Estado de mesas</a></li>
                     <li class="nav-item"><a href="ClienteConfigurarMesa" class="nav-link">Configurar mesa</a></li>
                     <li class="nav-item"><a href="adminReportes.jsp" class="nav-link">Reportes</a></li>
-                </c:if>
-                <c:if test="${sessionScope.sesionUsuario.rol.id == 3}">
-                    <li class="nav-item"><a href="CocineroPedidos" class="nav-link">Pedidos cocinero</a></li>
-                </c:if>
-                <c:if test="${sessionScope.sesionUsuario.rol.id == 6}">
-                    <li class="nav-item"><a href="registrarPedido.jsp" class="nav-link">Registrar pedido</a></li>
-                    <li class="nav-item"><a href="registrarDetallePedido.jsp" class="nav-link">Registrar detalle pedido</a></li>
-                    <li class="nav-item"><a href="ListarPedido" class="nav-link">Listar información de pedidos</a></li>
-                    <li class="nav-item"><a href="ListarDetallePedido" class="nav-link">Listar información de detalles</a></li>
-                </c:if>
-                    
-                <c:if test="${sessionScope.sesionUsuario.rol.id == 6}">
-                
-                </c:if>
-                    
-<!--                <li class="nav-item"><a href="MesaEstablecer" class="nav-link">Establecer numero de mesa</a></li>
-                <li class="nav-item"><a href="ClientePantallaInicio" class="nav-link">Pantalla inicio</a></li>
-                <li class="nav-item"><a href="MenuSeleccionar" class="nav-link">Seleccionar menu</a></li>-->
-                
-                
-<!--                <li class="nav-item"><a href="a_graph.jsp" class="nav-link">Graph</a></li>-->
-<!--                <li class="nav-item"><a href="Controller?estado=1" class="nav-link">Cerrar Sesión</a></li>-->
+                    <li class="nav-item"><a href="MesaEstablecer" class="nav-link">Totem</a></li>
+                    </c:if>
 
-                
-<!--                <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-                <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-                <li class="nav-item active"><a href="contact.html" class="nav-link">Contact</a></li>-->
+                <c:if test="${sessionScope.sesionUsuario.rol.id == 5}">
+                    <li class="nav-item"><a href="ClienteConfigurarMesa" class="nav-link">Configurar mesa</a></li>
+                    <li class="nav-item"><a href="MesaEstablecer" class="nav-link">Totem</a></li>
+                    </c:if>
+
+                <c:if test="${sessionScope.sesionUsuario.rol.id == 3}">
+                    <li class="nav-item"><a href="CocineroPedidos?comando=cargar" class="nav-link">Pedidos cocinero</a></li>
+                    </c:if>
+                    <c:if test="${sessionScope.sesionUsuario.rol.id == 6}">
+                    <li class="nav-item"><a href="ListarPedido" class="nav-link">Listar Pedidos</a></li>
+                    <li class="nav-item"><a href="ListarProducto" class="nav-link">Listar Productos</a></li>
+                    </c:if>
+
+                <li class="nav-item"><a href="Login" class="nav-link">Cerrar Sesión</a></li>
+                <!--                <li class="nav-item"><a href="MesaEstablecer" class="nav-link">Establecer numero de mesa</a></li>
+                                <li class="nav-item"><a href="ClientePantallaInicio" class="nav-link">Pantalla inicio</a></li>
+                                <li class="nav-item"><a href="MenuSeleccionar" class="nav-link">Seleccionar menu</a></li>-->
+
+
+                <!--                <li class="nav-item"><a href="a_graph.jsp" class="nav-link">Graph</a></li>-->
+                <!--                <li class="nav-item"><a href="Controller?estado=1" class="nav-link">Cerrar Sesión</a></li>-->
+
+
+                <!--                <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                                <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                                <li class="nav-item active"><a href="contact.html" class="nav-link">Contact</a></li>-->
             </ul>
         </div>
     </div>

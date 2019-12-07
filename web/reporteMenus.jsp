@@ -48,13 +48,20 @@
     <body id="page-top" style="background-image: ;">
         <jsp:include page="nav.jsp"/>
         <div class="container">
+            <br/><br/>
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">
-                        DATA DE COMESTIBLES
+                    <div class="card-title text-capitalize">
+                            DATA DE COMESTIBLES  <br/> ${fechaEscogida}
                     </div>
                 </div>
                 <div class="card-body p-4 m-4">
+                    <div class="alert-primary shadow p-3">
+                        Información del consummo de los menús ofertados por el restaurante del día seleccionado.
+                        <br/>
+                        Los menús corresponden a los platos principales que se clasifican en platos de fondo, ensaladas y postres.
+                    </div>
+                    <br/>
                     <div id="container" style="width: 100%;">
                         <canvas id="canvas"></canvas>
                     </div>
@@ -96,10 +103,16 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
-                            DATA DE BEBESTIBLES
+                            DATA DE BEBESTIBLES  <br/>  ${fechaEscogida}
                         </div>
                     </div>
                     <div class="card-body p-4 m-4">
+                        <div class="alert-primary shadow p-3">
+                            Información del consummo de los menús ofertados por el restaurante del día seleccionado.
+                            <br/>
+                            Los menús corresponden a las bebidas tipo gaseoas, jugos, agua o alcoholicas.
+                        </div>
+                        <br/>
                         <div id="container" style="width: 100%;">
                             <canvas id="canvas2"></canvas>
                         </div>
@@ -137,16 +150,16 @@
                 </div>
 
 
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">
-                            HOLA
-                        </div>
-                    </div>
-                    <div class="card-body">
-
-                    </div>
-                </div>
+                <!--                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            HOLA
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                
+                                    </div>
+                                </div>-->
 
 
 
